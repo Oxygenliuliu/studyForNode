@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>测试html</title>
+	</head>
+	<style>
+		html,body,p,ul,li{padding: 0;margin: 0;}
+		html {
+		  background: #fff;
+		}
+		body {
+		  background: #fff;
+		  filter: invert(1) hue-rotate(270deg);
+		  height: 100vh;
+		  transition: all .3s ease-in;
+		}
+		.title-box{
+			display: block;
+			width: 100vw;
+			height: 40px;
+			background-color: #000;
+			text-align: center;
+			line-height: 40px;
+		}
+		.title{color: blue;}
+		.title:hover+ .title1{
+			background-color: aquamarine;
+		}
+	</style>
+	<body>
+		<view class='title-box'>
+			<text class='title'>白天模式</text>
+			<text class='title1'>白天模式</text>
+		</view>
+		<script type="text/javascript">
+			
+			const fn1 = function(){
+				return new Promise((resolve,reject)=>{
+						setTimeout(()=>{
+							console.log(500)
+							resolve()
+						},500)
+					})
+				}
+				const fn2 = function(){
+					let name = '小明';
+					return new Promise((resolve,reject)=>{
+						setTimeout(()=>{
+							name = '小红';
+							console.log('fn2')
+							resolve(name)
+						},1000)
+					})
+				}
+				const fn5 =async function(){
+					let name =await fn2();
+					console.log(name);
+					console.log('我先执行?');
+				}
+				fn5()
+			// 读取config.json文件
+			
+			let fs = require('fs');
+			let url = '../json/config.json';
+			fs.readFile(url,(err,data)=>{
+				if(err){
+					return console.log(err,'错误信息')
+				}
+				console.log('异步读取内容: ' + data)
+			})
+			// class Person{
+			// 	constructor(name,age) { //这个是类的默认方法，创建类实例化对象被调用
+			// 		this.name = name;
+			// 		this.age = age;
+			// 		this.ssay = (a,b)=>{
+			// 			console.log(a+b,this.name)
+			// 		}
+			// 	}
+			// 	say(){
+			// 		console.log(this.name + '说话')
+			// 	}
+			// }
+			// let name1 = new Person('小红',32);
+			// let name2 = new Person('小明',23);
+			// name1.__proto__.sub = function(){// 隐式原型 通用
+			// 	console.log(this.name + '' + this.age);
+			// }
+			class Example{
+				constructor(name,age) {
+				    this.name = name;
+					this.age = age;
+				}
+				get name(){
+					console.log('getter')
+					return this._name;
+				}
+				set name(name){
+					console.log('setter_name')
+					this._name = name;
+				}
+				set age(age){
+					console.log('setter_age')
+					this._age = age;
+				}
+			}
+			class sonOfExample extends Example{
+				constructor() {
+				    super();
+				}
+			}
+			sonOfExample.__proto__.ss = function(){
+				console.log('公用吗');
+			}
+			sonOfExample.ss();
+			Example.ss()
+			let exam1 = new sonOfExample('小',32)
+			let exam = new Example(1,2)
+			// const login = function(){
+			// 	lo2().then(lo1())
+			// 	//let name1 = await lo1();
+			// 	//let name2 = await lo2();
+			// }
+			// console.log(name1.name)
+			// name2.ssay(3,5)
+			// name2.say();
+			// name1.sub();
+			// name2.sub();
+			
+			
+			const lo1 = ()=>{
+				return new Promise((resolve,reject)=>{
+					setTimeout(()=>{
+						console.log(500)
+						resolve()
+					},500)	
+				})
+			}
+			const lo2 = ()=>{
+				return new Promise((resolve,reject)=>{
+					setTimeout(()=>{
+						console.log(1000)
+						resolve()
+					},1000)	
+				})
+			}
+		//	lo2().then(lo1)
+			
+			const login = ()=>{ //模拟api接口
+				let status = false;
+				return new Promise((resolve,reject)=>{
+					setTimeout(()=>{
+						if(true){
+							status = true;
+							resolve(status)
+						}
+					},5000)
+				})
+			}
+			const api = async ()=>{
+				let status = await login();
+				if(status){
+					console.log('登录成功')
+				}else{console.log('登录失败')}
+			}
+			//api()
+			
+			// --------------------------------------------------------------
+			var name1 = 'Lili'
+			function a(){
+				var name = 'Tom';
+				console.log(this);
+				console.log(this.name)//找不到
+				console.log(this.name1)//'Lili'
+			}
+			a();
+			var person = {
+				user: '小明',
+				a: 10,
+				b:{
+					a: 12,
+					fn: function(){
+						console.log(this.a)
+					}
+				}
+			}
+			person.b.fn()
+			// function Person(){
+			// 	this.name = '小张';
+			// 	return function(){} 
+			// }
+			// var personB = new Person();
+			// console.log(personB.name)
+			var pp = {
+				name: '小张',
+				age: 10,
+				say: function(a,b){
+					console.log(this.name,a,b,'是否能打印出来')
+				}
+			}
+			var p1 = pp.say;
+			p1.call(pp,1,2)
+		</script>
+	</body>
+</html>
